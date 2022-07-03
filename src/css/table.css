@@ -1,0 +1,37 @@
+:root {
+    --escuro: #9f5531;
+    --claro: #fbf4e0;
+}
+
+#table {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    background: red;
+    height: 40rem;
+    width: 40rem;
+    box-shadow: 0 0 0 3px #000;
+}
+
+.black {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--escuro);
+    width: 5rem;
+    height: 5rem;
+}
+
+.white {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--claro);
+    width: 5rem;
+    height: 5rem;
+}
+
+img {
+    height: 5rem;
+}
