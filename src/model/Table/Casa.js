@@ -1,8 +1,12 @@
-export class Casa {
-    constructor (id, x, y){
+export { Casa }
+
+
+class Casa {
+    constructor (id, x, y, nome){
       this._id = id
       this._x = x
       this._y = y
+      this._nome = nome
       this._ocupante = []
     }
     get id () { 
@@ -17,6 +21,10 @@ export class Casa {
     get y () { 
         return this._y 
     }
+
+    get nome () { 
+        return this._nome
+    }
     
     set id (novoId) { 
         return this._id = novoId 
@@ -29,6 +37,9 @@ export class Casa {
     }
     set y (newY) { 
         return this._y = newY 
+    }
+    set nome (newNome) { 
+        return this._nome = newNome
     }
   }
   

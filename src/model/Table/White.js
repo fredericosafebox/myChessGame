@@ -1,16 +1,16 @@
-import { Casa } from "./src/model/Table/Casa.js";
+import { Casa } from "./Casa.js"
 
 export class White extends Casa {
-    constructor (id, x, y) {
-        super(id, x, y)
-        this._cor = "#fff"
+    constructor (id, x, y, nome) {
+        super(id, x, y, nome)
+        this._classe = "white"
     }
 
-    get cor () { 
-        return this._cor 
+    get classe () { 
+        return this._classe
     }
-    set cor (newCor) { 
-        return this._cor = newCor 
+    set classe (newClasse) { 
+        return this._classe = newClasse 
     }
 
  }

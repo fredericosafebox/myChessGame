@@ -1,3 +1,4 @@
-
-  import { GameControl } from "./controllers/table.js";
+import { GameControl } from "./controllers/table.js";
   
+
+GameControl.newGame()
