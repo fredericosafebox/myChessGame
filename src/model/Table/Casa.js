@@ -27,7 +27,7 @@ class Casa {
     }
     
     set id (novoId) { 
-        return this._id = novoId 
+        return this._id = Number(novoId) 
     }
     set ocupante (novoOcupante) { 
         return this._ocupante = novoOcupante 

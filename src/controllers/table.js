@@ -1,7 +1,16 @@
 import { Black } from "../model/Table/Black.js";
 import { White } from "../model/Table/White.js";
 
+import { Pawn } from "../model/Pieces/Pawn.js";
+import { Tower } from "../model/Pieces/Tower.js";
+import { Knight } from "../model/Pieces/Knight.js";
+import { Bishop } from "../model/Pieces/Bishop.js";
+import { Queen } from "../model/Pieces/Queen.js";
+import { King } from "../model/Pieces/King.js";
+
 export { GameControl }
+
+
 
 class GameControl {
 
@@ -10,19 +19,14 @@ class GameControl {
   static table = []
   static idCounter = 1
   static initialPositions = {
-    whitePawn : [9, 10, 11, 12, 13, 14, 15, 16],
-    whiteTower : [1, 8],
-    whiteKnight : [2, 7],
-    whiteBishop : [3, 6],
-    whiteQueen : [4],
-    whiteKing : [5],
-    blackPawn : [49, 50, 51, 52, 53, 54, 55, 56],
-    blackTower : [57, 64],
-    blackKnight : [58, 63],
-    blackBishop : [59, 62],
-    blackQueen : [60],
-    blackKing : [61]
+    pawn : [9, 10, 11, 12, 13, 14, 15, 16, 49, 50, 51, 52, 53, 54, 55, 56],
+    tower : [1, 8, 57, 64],
+    knight : [2, 7, 58, 63],
+    bishop : [3, 6, 59, 62],
+    queen : [4, 60],
+    king : [5, 61]
   }
+  static selectedPiece = []
 
   static newGame () {
     this.createTable()
@@ -37,21 +41,56 @@ class GameControl {
     this.eixoY.forEach((linhaAtual, indexY, arrayY) => {
       this.eixoX.forEach((colunaAtual, indexX, arrayX) => {
         // TESTE ABAIXO
-        /* console.log(`casa: ${colunaAtual}${linhaAtual} | X: ${indexX} Y: ${indexY} | ID: ${this.idCounter}`) */
+        //console.log(`casa: ${colunaAtual}${linhaAtual} | X: ${indexX} Y: ${indexY} | ID: ${this.idCounter}`) 
         const casaDiv = document.createElement("div")
+        const casaImg = document.createElement("img")
+        casaDiv.appendChild(casaImg)
 
         const casa = this.classValidate(indexX, indexY, colunaAtual, linhaAtual)
-
         this.table.push(casa)
+        
         casaDiv.classList.add(casa.classe)
         casaDiv.id = this.idCounter
         //teste de coordenadas abaixo
         //casaDiv.innerText = casa.id
         tabuleiro.insertBefore(casaDiv, tabuleiro.firstChild)
+
+        casaDiv.addEventListener("click", (event) => this.selectActions(event))
         this.idCounter++
       })
     })
     this.idCounter = 1
+  }
+
+  static selectActions (event) {
+    const casaSelecionada = GameControl.table.filter(casa => casa.id == event.currentTarget.id)[0]
+  
+    if (GameControl.selectedPiece.length < 1) {
+      if (casaSelecionada.ocupante.length < 1) {
+        console.log("casa sem ocupante")
+      } else {
+          GameControl.selectedPiece.push(casaSelecionada)
+          console.log(`A peca selecionada foi: ${casaSelecionada.ocupante[0].nome}`)
+        }
+    } else {
+        if (casaSelecionada.ocupante.length < 1) {
+          casaSelecionada.ocupante.push(GameControl.selectedPiece[0].ocupante[0])
+          GameControl.selectedPiece[0].ocupante.pop()
+          GameControl.selectedPiece.pop()
+          GameControl.atualizarTabuleiro()
+        }
+      }
+  }
+
+  static atualizarTabuleiro () {
+    const tabuleiro = document.getElementById("table")
+    const casas = Array.from(tabuleiro.getElementsByTagName("div"))
+    
+    casas.forEach(casaDiv => {
+      const imagem = casaDiv.getElementsByTagName("img")[0]
+      const casaObj = this.table.filter(room => room.id == casaDiv.id)[0]
+      casaObj.ocupante.length == 1 ? imagem.src = casaObj.ocupante[0].imagem : imagem.removeAttribute("src")
+    })
   }
 
   static classValidate (indexX, indexY, colunaAtual, linhaAtual) {
@@ -77,8 +116,75 @@ class GameControl {
 
   static tableSetter () {
     
+    this.initialPositions.pawn.forEach(id => {
+      let cor = ""
+      id > 16 ? cor = "black" : cor = "white"
+      const casaDiv = document.getElementById(id)
+      const casaObj = this.table.filter(room => room.id == casaDiv.id)[0]
+      const pawn = new Pawn(cor)
+      pawn.definirImagem()
+      casaObj.ocupante.push(pawn)
+      casaDiv.getElementsByTagName("img")[0].src = casaObj.ocupante[0].imagem
+    })
+
+    this.initialPositions.tower.forEach(id => {
+      let cor = ""
+      id > 16 ? cor = "black" : cor = "white"
+      const casaDiv = document.getElementById(id)
+      const casaObj = this.table.filter(room => room.id == casaDiv.id)[0]
+      const tower = new Tower(cor)
+      tower.definirImagem()
+      casaObj.ocupante.push(tower)
+      casaDiv.getElementsByTagName("img")[0].src = casaObj.ocupante[0].imagem
+    })
+
+    this.initialPositions.knight.forEach(id => {
+      let cor = ""
+      id > 16 ? cor = "black" : cor = "white"
+      const casaDiv = document.getElementById(id)
+      const casaObj = this.table.filter(room => room.id == casaDiv.id)[0]
+      const knight = new Knight(cor)
+      knight.definirImagem()
+      casaObj.ocupante.push(knight)
+      casaDiv.getElementsByTagName("img")[0].src = casaObj.ocupante[0].imagem
+    })
+
+    this.initialPositions.bishop.forEach(id => {
+      let cor = ""
+      id > 16 ? cor = "black" : cor = "white"
+      const casaDiv = document.getElementById(id)
+      const casaObj = this.table.filter(room => room.id == casaDiv.id)[0]
+      const bishop = new Bishop(cor)
+      bishop.definirImagem()
+      casaObj.ocupante.push(bishop)
+      casaDiv.getElementsByTagName("img")[0].src = casaObj.ocupante[0].imagem
+    })
+
+    this.initialPositions.queen.forEach(id => {
+      let cor = ""
+      id > 16 ? cor = "black" : cor = "white"
+      const casaDiv = document.getElementById(id)
+      const casaObj = this.table.filter(room => room.id == casaDiv.id)[0]
+      const queen = new Queen(cor)
+      queen.definirImagem()
+      casaObj.ocupante.push(queen)
+      casaDiv.getElementsByTagName("img")[0].src = casaObj.ocupante[0].imagem
+    })
+
+    this.initialPositions.king.forEach(id => {
+      let cor = ""
+      id > 16 ? cor = "black" : cor = "white"
+      const casaDiv = document.getElementById(id)
+      const casaObj = this.table.filter(room => room.id == casaDiv.id)[0]
+      const king = new King(cor)
+      king.definirImagem()
+      casaObj.ocupante.push(king)
+      casaDiv.getElementsByTagName("img")[0].src = casaObj.ocupante[0].imagem
+    })
 
   }
+
+  
       
 
 }
