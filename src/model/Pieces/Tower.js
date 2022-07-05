@@ -3,8 +3,8 @@ import { Piece } from "./Piece.js";
 export { Tower }
 
 class Tower extends Piece {
-    constructor (cor) {
-        super(cor)
+    constructor (cor, x, y) {
+        super(cor, x, y)
         this._imagem = ""
         this._nome = "Tower"
     }

@@ -1,6 +1,8 @@
 :root {
     --escuro: #9f5531;
     --claro: #fbf4e0;
+    --possibilidadesBorda: #7209b7;
+    --possibilidadesBackground: #b5179e;
 }
 
 #table {
@@ -9,10 +11,11 @@
     flex-direction: row-reverse;
     align-items: center;
     flex-wrap: wrap;
-    background: red;
+    background: rgb(128, 127, 127);
     height: 40rem;
     width: 40rem;
     box-shadow: 0 0 0 3px #000;
+    overflow: hidden;
 }
 
 .black {
@@ -31,6 +34,18 @@
     background: var(--claro);
     width: 5rem;
     height: 5rem;
+}
+
+.possibilidade {
+    box-shadow: 0 0 7px 5px var(--possibilidadesBorda);
+    background: var(--possibilidadesBackground);
+    opacity: 0.6;
+    position: relative;
+}
+
+.selecionado {
+    box-shadow: 0 0 2px 2px var(--possibilidadesBorda);
+    position: relative;
 }
 
 #table div img {
